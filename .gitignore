@@ -1,0 +1,8 @@
+*.tfstate*
+.terraform
+terraform.tfvars
+terraform-provider-delphix
+*.pem
+*.tgz
+*.bak
+.DS_Store

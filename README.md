@@ -50,7 +50,7 @@ cd delphix-terraform-blueprints-rds
 
 ## <a id="usage"></a>Usage
 
-###Building
+### Building
 
 1. Edit the .example.env file in the root directory of the cloned repo
   The following variables should be set before proceeding, you can proceed with the defaults on the remaining:
@@ -78,7 +78,7 @@ cd delphix-terraform-blueprints-rds
 15. After the assets are built, you will need to start the dms replication task. Select the DMS replication task in your AWS console and push start.
 16. Once the initial load is complete, the data has been replicated from AWS into the Delphix Engine.
 
-###Destroying
+### Destroying
 
 1. Stop the DMS replication task in the AWS console
 2. In your terminal, navigate to the root project directory.

@@ -1,13 +1,13 @@
 resource "aws_dms_endpoint" "source" {
-  depends_on                  = ["null_resource.emptydb"]
-  database_name               = "${aws_db_instance.default.name}"
+  // depends_on                  = ["null_resource.emptydb"]
+  database_name               = "${data.aws_db_instance.default.db_name}"
   endpoint_id                 = "source-${data.terraform_remote_state.delphix_infra.uuid}"
   endpoint_type               = "source"
   engine_name                 = "oracle"
-  password                    = "${aws_db_instance.default.password}"
-  port                        = "${aws_db_instance.default.port}"
+  password                    = "${var.rds_db_password}"
+  port                        = "${data.aws_db_instance.default.port}"
   ssl_mode                    = "none"
-  server_name                 = "${aws_db_instance.default.address}"
+  server_name                 = "${data.aws_db_instance.default.address}"
   extra_connection_attributes = "addSupplementalLogging=Y;readTableSpaceName=true"
 
   tags {
@@ -18,7 +18,7 @@ resource "aws_dms_endpoint" "source" {
         "dlpx:Expiration" = "${data.terraform_remote_state.delphix_infra.expiration}"
     }
 
-  username = "${aws_db_instance.default.username}"
+  username = "${data.aws_db_instance.default.master_username}"
 }
 
 resource "aws_dms_endpoint" "target" {
@@ -30,7 +30,7 @@ resource "aws_dms_endpoint" "target" {
   password                    = "${delphix_data_source_oracle.my-dsource.password}"
   port                        = 1521
   ssl_mode                    = "none"
-  server_name                 = "${aws_instance.target.public_dns}"
+  server_name                 = "${data.aws_instance.target.public_dns}"
 
   tags {
         Name = "${data.terraform_remote_state.delphix_infra.project}_aws_dms_endpoint_target"

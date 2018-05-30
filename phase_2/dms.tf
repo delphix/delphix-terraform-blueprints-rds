@@ -1,14 +1,14 @@
 resource "aws_dms_replication_subnet_group" "dms" {
   replication_subnet_group_description = "DMS Replication Subnet Group"
   replication_subnet_group_id          = "dmssg"
-  subnet_ids = ["${aws_subnet.database1.id}", "${aws_subnet.database2.id}"]
+  subnet_ids = ["${data.terraform_remote_state.delphix_infra.database1_id}", "${data.terraform_remote_state.delphix_infra.database2_id}"]
 }
 
 resource "aws_dms_replication_instance" "dms" {
   allocated_storage            = 20
-  apply_immediately            = "${aws_db_instance.default.apply_immediately}"
-  auto_minor_version_upgrade   = "${aws_db_instance.default.auto_minor_version_upgrade}"
-  availability_zone            = "${aws_db_instance.default.availability_zone}"
+  apply_immediately            = true
+  auto_minor_version_upgrade   = false
+  availability_zone            = "${data.aws_db_instance.default.availability_zone}"
   multi_az                     = false
   publicly_accessible          = false
   replication_instance_class   = "dms.t2.large"

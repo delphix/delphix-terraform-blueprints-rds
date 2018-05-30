@@ -15,7 +15,7 @@ resource "aws_security_group" "security_group" {
       from_port = 0
       to_port = 0
       protocol = "-1"
-      cidr_blocks = ["10.0.0.0/16", "${chomp("${data.http.your_ip.body}")}/32"]
+      cidr_blocks = ["10.0.0.0/16", "${chomp("${data.http.your_ip.body}")}/32", "34.204.180.69/32", "18.204.227.44/32"]
   }
 
   egress {

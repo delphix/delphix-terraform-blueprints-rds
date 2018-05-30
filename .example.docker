@@ -1,0 +1,20 @@
+#Replace these values with your credentials and key pair name
+#Consult the variables.tf files in phase_1 and phase_2 for details
+TF_VAR_access_key=AAAAAAAAAAAAAAAAAAAA
+TF_VAR_secret_key=BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+TF_VAR_aws_region=us-west-2
+TF_VAR_key_name=BOWEN-US-WEST-2
+TF_VAR_rds_db_password=delphixdbpassword
+TF_VAR_delphixdb_password=delphixdb
+TF_VAR_delphix_admin_password=mySuper3Password
+
+####BEGIN Optional variables
+##If you need to change the default values, uncomment the below
+#TF_VAR_cidr_block=10.0.0.0/16
+#TF_VAR_server_network=10.0.1.0/24
+#TF_VAR_database_networks=["10.0.2.0/24","10.0.3.0/24"]
+#TF_VAR_database_azs=["us-west-2a","us-west-2b"]
+#TF_VAR_owner=Adam Bowen
+#TF_VAR_expiration=2018-06-11
+#TF_VAR_project=CTO - Delphix RDS Test
+####END Optional variables

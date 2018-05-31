@@ -37,7 +37,6 @@ output "database2_id" {
 }
 
 resource "aws_db_subnet_group" "default" {
-  name       = "database_subnet_group"
   subnet_ids = ["${aws_subnet.database1.id}", "${aws_subnet.database2.id}"]
 
   tags {

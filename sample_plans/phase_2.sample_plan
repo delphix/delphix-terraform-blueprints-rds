@@ -1,0 +1,149 @@
+data.terraform_remote_state.delphix_infra: Refreshing state...
+data.aws_db_instance.default: Refreshing state...
+data.aws_iam_role.dms-vpc-role: Refreshing state...
+data.aws_instance.target: Refreshing state...
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  + aws_dms_endpoint.source
+      id:                                   <computed>
+      certificate_arn:                      <computed>
+      database_name:                        "ORCL"
+      endpoint_arn:                         <computed>
+      endpoint_id:                          "source-c6e61d492e885426"
+      endpoint_type:                        "source"
+      engine_name:                          "oracle"
+      extra_connection_attributes:          "addSupplementalLogging=Y;readTableSpaceName=true"
+      kms_key_arn:                          <computed>
+      password:                             <sensitive>
+      port:                                 "1521"
+      server_name:                          "terraform-20180531134144955300000001.chnrjno1jp2y.us-west-2.rds.amazonaws.com"
+      ssl_mode:                             "none"
+      tags.%:                               "5"
+      tags.Name:                            "CTO - Delphix RDS Test_aws_dms_endpoint_source"
+      tags.UUID:                            "c6e61d492e885426"
+      tags.dlpx:Expiration:                 "2018-06-11"
+      tags.dlpx:Owner:                      "Adam Bowen"
+      tags.dlpx:Project:                    "CTO - Delphix RDS Test"
+      username:                             "delphixdb"
+
+  + aws_dms_endpoint.target
+      id:                                   <computed>
+      certificate_arn:                      <computed>
+      database_name:                        "rdsrepl"
+      endpoint_arn:                         <computed>
+      endpoint_id:                          "target-c6e61d492e885426"
+      endpoint_type:                        "target"
+      engine_name:                          "oracle"
+      extra_connection_attributes:          <computed>
+      kms_key_arn:                          <computed>
+      password:                             <sensitive>
+      port:                                 "1521"
+      server_name:                          "ec2-34-219-81-70.us-west-2.compute.amazonaws.com"
+      ssl_mode:                             "none"
+      tags.%:                               "5"
+      tags.Name:                            "CTO - Delphix RDS Test_aws_dms_endpoint_target"
+      tags.UUID:                            "c6e61d492e885426"
+      tags.dlpx:Expiration:                 "2018-06-11"
+      tags.dlpx:Owner:                      "Adam Bowen"
+      tags.dlpx:Project:                    "CTO - Delphix RDS Test"
+      username:                             "delphixdb"
+
+  + aws_dms_replication_instance.dms
+      id:                                   <computed>
+      allocated_storage:                    "20"
+      apply_immediately:                    "true"
+      auto_minor_version_upgrade:           "false"
+      availability_zone:                    "us-west-2a"
+      engine_version:                       <computed>
+      kms_key_arn:                          <computed>
+      multi_az:                             "false"
+      preferred_maintenance_window:         <computed>
+      publicly_accessible:                  "false"
+      replication_instance_arn:             <computed>
+      replication_instance_class:           "dms.t2.large"
+      replication_instance_id:              "dms-replication-instance-c6e61d492e885426"
+      replication_instance_private_ips.#:   <computed>
+      replication_instance_public_ips.#:    <computed>
+      replication_subnet_group_id:          "${aws_dms_replication_subnet_group.dms.id}"
+      tags.%:                               "5"
+      tags.Name:                            "CTO - Delphix RDS Test_aws_dms_replication_instance"
+      tags.UUID:                            "c6e61d492e885426"
+      tags.dlpx:Expiration:                 "2018-06-11"
+      tags.dlpx:Owner:                      "Adam Bowen"
+      tags.dlpx:Project:                    "CTO - Delphix RDS Test"
+      vpc_security_group_ids.#:             "1"
+      vpc_security_group_ids.3531407257:    "sg-b0f673c1"
+
+  + aws_dms_replication_subnet_group.dms
+      id:                                   <computed>
+      replication_subnet_group_arn:         <computed>
+      replication_subnet_group_description: "DMS Replication Subnet Group"
+      replication_subnet_group_id:          "dmssg"
+      subnet_ids.#:                         "2"
+      subnet_ids.1319488928:                "subnet-d56306ac"
+      subnet_ids.1362886942:                "subnet-42048309"
+      vpc_id:                               <computed>
+
+  + aws_dms_replication_task.dms
+      id:                                   <computed>
+      migration_type:                       "full-load-and-cdc"
+      replication_instance_arn:             "${aws_dms_replication_instance.dms.replication_instance_arn}"
+      replication_task_arn:                 <computed>
+      replication_task_id:                  "dms-replication-task-c6e61d492e885426"
+      replication_task_settings:            "{\"TargetMetadata\":{\"TargetSchema\":\"delphixdb\",\"SupportLobs\":true,\"FullLobMode\":false,\"LobChunkSize\":0,\"LimitedSizeLobMode\":true,\"LobMaxSize\":32,\"LoadMaxFileSize\":0,\"ParallelLoadThreads\":0,\"ParallelLoadBufferSize\":0,\"BatchApplyEnabled\":false,\"TaskRecoveryTableEnabled\":false},\"FullLoadSettings\":{\"TargetTablePrepMode\":\"DROP_AND_CREATE\",\"CreatePkAfterFullLoad\":false,\"StopTaskCachedChangesApplied\":false,\"StopTaskCachedChangesNotApplied\":false,\"MaxFullLoadSubTasks\":8,\"TransactionConsistencyTimeout\":600,\"CommitRate\":10000},\"Logging\":{\"EnableLogging\":false,\"LogComponents\":[{\"Id\":\"SOURCE_UNLOAD\",\"Severity\":\"LOGGER_SEVERITY_DEFAULT\"},{\"Id\":\"SOURCE_CAPTURE\",\"Severity\":\"LOGGER_SEVERITY_DEFAULT\"},{\"Id\":\"TARGET_LOAD\",\"Severity\":\"LOGGER_SEVERITY_DEFAULT\"},{\"Id\":\"TARGET_APPLY\",\"Severity\":\"LOGGER_SEVERITY_DEFAULT\"},{\"Id\":\"TASK_MANAGER\",\"Severity\":\"LOGGER_SEVERITY_DEFAULT\"}],\"CloudWatchLogGroup\":null,\"CloudWatchLogStream\":null},\"ControlTablesSettings\":{\"historyTimeslotInMinutes\":5,\"ControlSchema\":\"\",\"HistoryTimeslotInMinutes\":5,\"HistoryTableEnabled\":false,\"SuspendedTablesTableEnabled\":false,\"StatusTableEnabled\":false},\"StreamBufferSettings\":{\"StreamBufferCount\":3,\"StreamBufferSizeInMB\":8,\"CtrlStreamBufferSizeInMB\":5},\"ChangeProcessingDdlHandlingPolicy\":{\"HandleSourceTableDropped\":true,\"HandleSourceTableTruncated\":true,\"HandleSourceTableAltered\":true},\"ErrorBehavior\":{\"DataErrorPolicy\":\"LOG_ERROR\",\"DataTruncationErrorPolicy\":\"LOG_ERROR\",\"DataErrorEscalationPolicy\":\"SUSPEND_TABLE\",\"DataErrorEscalationCount\":0,\"TableErrorPolicy\":\"SUSPEND_TABLE\",\"TableErrorEscalationPolicy\":\"STOP_TASK\",\"TableErrorEscalationCount\":0,\"RecoverableErrorCount\":-1,\"RecoverableErrorInterval\":5,\"RecoverableErrorThrottling\":true,\"RecoverableErrorThrottlingMax\":1800,\"ApplyErrorDeletePolicy\":\"IGNORE_RECORD\",\"ApplyErrorInsertPolicy\":\"LOG_ERROR\",\"ApplyErrorUpdatePolicy\":\"LOG_ERROR\",\"ApplyErrorEscalationPolicy\":\"LOG_ERROR\",\"ApplyErrorEscalationCount\":0,\"ApplyErrorFailOnTruncationDdl\":false,\"FullLoadIgnoreConflicts\":true,\"FailOnTransactionConsistencyBreached\":false,\"FailOnNoTablesCaptured\":false},\"ChangeProcessingTuning\":{\"BatchApplyPreserveTransaction\":true,\"BatchApplyTimeoutMin\":1,\"BatchApplyTimeoutMax\":30,\"BatchApplyMemoryLimit\":500,\"BatchSplitSize\":0,\"MinTransactionSize\":1000,\"CommitTimeout\":1,\"MemoryLimitTotal\":1024,\"MemoryKeepTime\":60,\"StatementCacheSize\":50}}"
+      source_endpoint_arn:                  "${aws_dms_endpoint.source.endpoint_arn}"
+      table_mappings:                       "{\"rules\":[{\"rule-type\":\"selection\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"object-locator\":{\"schema-name\":\"DELPHIXDB\",\"table-name\":\"%\"},\"rule-action\":\"include\"}]}"
+      tags.%:                               "5"
+      tags.Name:                            "CTO - Delphix RDS Test_repl_task"
+      tags.UUID:                            "c6e61d492e885426"
+      tags.dlpx:Expiration:                 "2018-06-11"
+      tags.dlpx:Owner:                      "Adam Bowen"
+      tags.dlpx:Project:                    "CTO - Delphix RDS Test"
+      target_endpoint_arn:                  "${aws_dms_endpoint.target.endpoint_arn}"
+
+  + delphix_data_source_oracle.my-dsource
+      id:                                   <computed>
+      description:                          "Provisioned via Terraform"
+      environment:                          "${delphix_environment.my-environment.id}"
+      environment_user:                     "delphix"
+      group_name:                           "Untitled"
+      instance:                             "EMPTY"
+      link_now:                             "true"
+      name:                                 "Empty Database"
+      oracle_home:                          "/u01/app/oracle/product/11.2.0.4/ora_1"
+      password:                             "delphixdb"
+      user_name:                            "delphixdb"
+
+  + delphix_environment.my-environment
+      id:                                   <computed>
+      address:                              "10.0.1.168"
+      description:                          "Provisioned via Terraform"
+      name:                                 "LINUXTARGET"
+      public_key:                           "true"
+      server_id:                            "i-057f3a4410108da6f"
+      toolkit_path:                         "/u01/app/toolkit"
+      user_name:                            "delphix"
+
+  + delphix_vdb.rds-replica
+      id:                                   <computed>
+      db_name:                              "rdsrepl"
+      environment:                          "${delphix_environment.my-environment.id}"
+      group_name:                           "Untitled"
+      mount_base:                           "/u01/app/toolkit"
+      name:                                 "RDS Replica VDB"
+      oracle_home:                          "/u01/app/oracle/product/11.2.0.4/ora_1"
+      source:                               "${delphix_data_source_oracle.my-dsource.id}"
+
+  + null_resource.copy_populate_rds_db
+      id:                                   <computed>
+
+  + null_resource.populate_rds_db
+      id:                                   <computed>
+
+
+Plan: 10 to add, 0 to change, 0 to destroy.

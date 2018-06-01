@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 echo ORACLE_HOME is ${ORACLE_HOME}
 export ORACLE_SID="${2}"
 echo ORACLE_SID is ${ORACLE_SID}

@@ -1,6 +1,6 @@
 resource "aws_dms_replication_subnet_group" "dms" {
   replication_subnet_group_description = "DMS Replication Subnet Group"
-  replication_subnet_group_id          = "dmssg"
+  replication_subnet_group_id          = "dmssg-${data.terraform_remote_state.delphix_infra.uuid}"
   subnet_ids = ["${data.terraform_remote_state.delphix_infra.database1_id}", "${data.terraform_remote_state.delphix_infra.database2_id}"]
 }
 

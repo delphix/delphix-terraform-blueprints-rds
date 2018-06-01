@@ -1,7 +1,7 @@
 *.tfstate*
 .terraform
 terraform.tfvars
-terraform-provider-delphix
+terraform-provider-delphix*
 *.pem
 *.tgz
 *.bak

@@ -20,8 +20,10 @@ This is repo is actually a set of three terraform blueprints that build sequenti
 The sequence of automation is as follows:
 
 Phase 1 - Build the networking, security rules, servers and RDS instance.
-Phase 2 - Configure DMS & Delphix, Start the DMS replication task
-Phase 3 - Create the Virtual Database copy of the RDS data source
+
+Phase 2 - Configure DMS & Delphix, Start the DMS replication task.
+
+Phase 3 - Create the Virtual Database copy of the RDS data source.
 
 ## <a id="prereqs"></a>Prerequisites
 

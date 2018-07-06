@@ -18,7 +18,7 @@ data "aws_ami" "de_ami" {
   most_recent = true
   filter {
     name = "name"
-    values = ["Delphix Engine 5.2*"]
+    values = ["Delphix Engine 5.2.*"]
   }
 
   #From Delphix

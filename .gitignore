@@ -6,3 +6,4 @@ terraform-provider-delphix*
 *.tgz
 *.bak
 .DS_Store
+.environment.env

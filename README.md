@@ -20,8 +20,8 @@ The purpose of this project is to demonstrate how Delphix can ingest and leverag
 
 These instructions assume the reader has a basic knowledge of Terraform and a working understanding of AWS.
 Pre-requisites:
-1. Access to Delphix 5.2.4 AMI in AWS obtained [from here](https://www.terraform.io/downloads.html) (requires licensed account)
-2. Access to the CentOS6.9 Oracle 11.2.0.4 AMI in AWS created [from here](https://github.com/delphix/packer-delphix-centos69-oracle11204)
+1. Access to Delphix 5.2 AMI in AWS obtained [from here](https://www.terraform.io/downloads.html) (requires licensed account)
+2. Access to the delphix-rds-demo-target AMI in AWS created [from here](https://github.com/delphix/packer-templates)
 3. Appropriate permissions to create, manage, and destroy the corresponding assets in AWS.
   * VPC
   * Subnet
@@ -50,7 +50,7 @@ Pre-requisites:
 * Navigate into the cloned directory
 * Copy the .example.env to .environment.env
 * Install Terraform 11.7 or above [from here](https://www.terraform.io/downloads.html) to  /usr/local/bin/terraform
-* Install the terraform-provider-delphix [from here](https://github.com/delphix/terraform-provider-delphix) into the phase_2 subdirectory of the cloned repo
+* Install the terraform-provider-delphix [from here](https://github.com/delphix/terraform-provider-delphix) into the phase_2 and the phase_3 subdirectories of the cloned repo
 
 ```bash
 git clone https://github.com/delphix/delphix-terraform-blueprints-rds

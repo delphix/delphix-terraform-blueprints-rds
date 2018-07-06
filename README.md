@@ -16,6 +16,13 @@ Terraform blueprints that deploy RDS and Delphix assets into AWS and configures 
 
 The purpose of this project is to demonstrate how Delphix can ingest and leverage data from Amazon RDS. This repository contains Terraform blueprints that will create all of the objects and data needed to complete the demonstration.
 
+This is repo is actually a set of three terraform blueprints that build sequentially on top of eachother, due to dependencies.
+The sequence of automation is as follows:
+
+Phase 1 - Build the networking, security rules, servers and RDS instance.
+Phase 2 - Configure DMS & Delphix, Start the DMS replication task
+Phase 3 - Create the Virtual Database copy of the RDS data source
+
 ## <a id="prereqs"></a>Prerequisites
 
 These instructions assume the reader has a basic knowledge of Terraform and a working understanding of AWS.

@@ -8,8 +8,9 @@ Terraform blueprints that deploy RDS and Delphix assets into AWS and configures 
 3.  [Installation](#installation)
 4.  [Usage](#usage)
 5.  [Links](#links)
-6.  [Reporting Issues](#reporting-issues)
-7.  [License](#license)
+6.  [Workflow](#workflow)
+7.  [Reporting Issues](#reporting-issues)
+8.  [License](#license)
 
 ## <a id="description"></a>Description
 
@@ -39,68 +40,97 @@ Pre-requisites:
 
 ## <a id="installation"></a>Installation
 
+### <a id="installation-via-docker"></a>Via Docker (the easiest) ###
 * Clone this repository
+* Navigate into the cloned directory
+* Copy the .example.docker to .environment.env
+
+### <a id="installation-via-docker"></a>Without Docker (the second easiest) ###
+* Clone this repository
+* Navigate into the cloned directory
+* Copy the .example.env to .environment.env
 * Install Terraform 11.7 or above [from here](https://www.terraform.io/downloads.html) to  /usr/local/bin/terraform
 * Install the terraform-provider-delphix [from here](https://github.com/delphix/terraform-provider-delphix) into the phase_2 subdirectory of the cloned repo
 
 ```bash
 git clone https://github.com/delphix/delphix-terraform-blueprints-rds
 cd delphix-terraform-blueprints-rds
+cp .example.docker .environment.env
+#or#
+cp .example.env .environment.env
 ```
 
 ## <a id="usage"></a>Usage
 
-### Building
-
-1. Edit the .example.env file in the root directory of the cloned repo
+### Configuring
+1. Edit the .environment.env file in the root directory of the cloned repo
   The following variables should be set before proceeding, you can proceed with the defaults on the remaining:
   * TF_VAR_access_key - Your AWS Access Key
   * TF_VAR_secret_key - Your AWS Secret Key
-  * TF_VAR_key_name - The name of your AWS key pair (default us-west-2 region)
+  * TF_VAR_aws_region - The AWS region where you will run this demo (if you change this, you will need to change TF_VAR_database_azs)
+  * TF_VAR_key_name - The name of your AWS key pair, this is region specific
   * TF_VAR_rds_db_password - 8-30 character password of your choosing
   * TF_VAR_delphixdb_password - 8-30 character password of your choosing
   * TF_VAR_delphix_admin_password - password of your choosing
-2. source the .example.env file, i.e. ```source .example.env```
-3. change to the phase_1 subdirectory in your terminal
-5. Run ```terraform init``` to initialize Terraform in the directory
-6. Run ```terraform apply``` to apply the Terraform plan to build out the assets for Phase 1.
-7. After the assets are built, navigate to the Delphix public IP in a web browser (it will take several minutes to become available)
-8. After the Delphix setup wizard begins, complete the setup with your information and default values. Be sure to jot down passwords.
-  * If you need detail on completing the setup wizard, look at [these resources](./docs/setup_wizard)
-9. change to the root directory of the cloned repo
-10. ssh into the Delphix engine as delphix_admin, obtain the systemKey (details in them comments of the .example.env file)
-11. Edit the .example.env file to set the TF_VAR_delphix_engine_system_key
-12. source the .example.env file, i.e. ```source .example.env```
-13. change to the phase_2 subdirectory in your terminal
-10. Copy the private key (.pem) from your key pair into the phase_2 folder. 
-13. Run ```terraform init``` to initialize Terraform in the directory
-14. Run ```terraform apply``` to apply the Terraform plan to build out the assets for Phase 2. This process will take 15-20 minutes to complete.
-15. After the assets are built, you will need to start the dms replication task. Select the DMS replication task in your AWS console and push start.
-16. Once the initial load is complete, the data has been replicated from AWS into the Delphix Engine.
+2. Copy your AWS Key file (\<something\>.pem) into the cloned repo folder
+
+### Building
+
+#### Via Docker
+1. (Optional) Pull the cloudsurgeon/rds_demo docker image
+2. Initialize the current working directory, via the docker container
+3. Run the demonstration. This process will take ~20-25 minutes to complete.
+
+```bash
+docker pull cloudsurgeon/rds_demo
+docker run --env-file .environment.env -i -t -v $(pwd):/app/ -w /app/ cloudsurgeon/rds_demo init
+docker run --env-file .environment.env -i -t -v $(pwd):/app/ -w /app/ cloudsurgeon/rds_demo apply -auto-approve
+```
+
+#### Without Docker
+1. source the .example.env file, i.e. ```source .environment.env```
+2. change to the phase_1 subdirectory in your terminal
+3. Run ```terraform init``` to initialize Terraform in the directory
+4. Run ```terraform apply --auto-approve``` to apply the Terraform plan to build out the assets for Phase 1. This process will take 15-20 minutes to complete.
+5. Change to the phase_2 subdirectory in your terminal ```cd ../phase_2```
+6. Run ```terraform init``` to initialize Terraform in the directory
+7. Run ```terraform apply --auto-approve``` to apply the Terraform plan to build out the assets for Phase 2. This process will take ~5-10 minutes to complete.
+8. Change to the phase_3 subdirectory in your terminal ```cd ../phase_3```
+9. Run ```terraform init``` to initialize Terraform in the directory
+10. Run ```terraform apply --auto-approve``` to apply the Terraform plan to build out the assets for Phase 3. 
 
 ### Destroying
+#### Via Docker
+1. Destroy the demonstration. This process will take ~20 minutes to complete.
 
+```bash
+docker run --env-file .environment.env -i -t -v $(pwd):/app/ -w /app/ cloudsurgeon/rds_demo destroy -auto-approve
+```
+
+#### Without Docker
 1. Stop the DMS replication task in the AWS console
 2. In your terminal, navigate to the root project directory.
 3. source the .example.env file, i.e. ```source .example.env```
-4. change to the phase_2 subdirectory
-5. Run ```terraform destroy``` to destroy the phase_2 assets. This process will take ~15 minutes to complete.
-6. Once complete, change to the phase_1 subdirectory of the cloned repo
-7. Run ```terraform destroy``` to destroy the phase_1 assets.
+4. change to the phase_3 subdirectory
+5. Run ```terraform destroy``` to destroy the phase_3 assets.
+6. change to the phase_2 subdirectory
+7. Run ```terraform destroy``` to destroy the phase_2 assets. This process will take ~5-10 minutes to complete.
+8. Once complete, change to the phase_1 subdirectory of the cloned repo
+9. Run ```terraform destroy``` to destroy the phase_1 assets. This process will take ~15 minutes to complete.
 
 ## <a id="links"></a>Links
 
 *   [Delphix Downloads Page](https://download.delphix.com/)
 *   [AWS Getting Started Tutorial](https://aws.amazon.com/getting-started/tutorials/)
 *   [terraform-provider-delphix](https://github.com/delphix/terraform-provider-delphix)
-*   [screenshots of the setup wizard](./docs/setup_wizard)
+*   [docker container for building demo](https://hub.docker.com/r/cloudsurgeon/rds_demo/)
 *   [video of phase_1 init+apply](https://vimeo.com/267154293/124a0871ca)
 *   [video of phase_2 init+apply](https://vimeo.com/267153750/475e16463b)
 *   [video of phase_1 destroy](https://vimeo.com/267152770/33b218aafe)
 *   [video of phase_2 destroy](https://vimeo.com/267152866/29b5a02739)
 
 
-#### Workflow
+## <a id="workflow"></a> Workflow
 
 1.  Fork the project.
 2.  Make your bug fix or new feature.
